@@ -2,6 +2,7 @@ const express=require('express');
 const cookieParser=require('cookie-parser');
 const bodyParser=require('body-parser');
 const dotenv=require('dotenv').config();
+const cors=require('cors');
 
 const connectToDB = require('./DBconfig');
 
@@ -12,6 +13,10 @@ const userRoutes=require('./routes/user.route');
 
 const app=express();
 
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
