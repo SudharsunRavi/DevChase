@@ -8,6 +8,7 @@ const connectToDB = require('./DBconfig');
 const authRoutes=require('./routes/auth.route');
 const profileRoutes=require('./routes/profile.route');
 const connectionRoutes=require('./routes/connection.route');
+const userRoutes=require('./routes/user.route');
 
 const app=express();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/request', connectionRoutes);
+app.use('/api/user', userRoutes);
 
 connectToDB().then(() => {
     app.listen(5000, () => {

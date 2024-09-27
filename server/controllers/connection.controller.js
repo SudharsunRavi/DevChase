@@ -31,4 +31,25 @@ const sendConnectionRequest = async (req, res) => {
     }
 }
 
-module.exports = { sendConnectionRequest };
+const receiveConnectionRequest = async (req, res) => {
+    try {
+        const loggedInUser = req.user._id; //from middleware
+        const status = req.params.status;
+        const connectionRequestId = req.params.connectionRequestId;
+
+        const allowedStatus = ['accepted', 'rejected'];
+        if(!allowedStatus.includes(status)) throw new Error("Invalid status");
+
+        const connectionRequest = await connectionModel.findOne({ _id: connectionRequestId, status: "interested", toUser: loggedInUser });
+        if(!connectionRequest) throw new Error("Invalid request");
+
+        connectionRequest.status = status;
+        const data = await connectionRequest.save();
+        res.status(200).json({ status: true, message: "Connection request updated successfully!", data });
+    
+    } catch (error) {
+        res.status(500).json({ status: false, message: error.message});
+    }
+}
+
+module.exports = { sendConnectionRequest, receiveConnectionRequest };
