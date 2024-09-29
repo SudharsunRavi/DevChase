@@ -18,8 +18,8 @@ const update=async (req, res) => {
             user[key]=req.body[key];
         });
 
-        await user.save();
-        res.status(200).json({ status: true, message: 'Profile updated successfully!' });
+        const data=await user.save();
+        res.status(200).json({ status: true, message: 'Profile updated successfully!', data});
     } catch (error) {
         res.status(500).json({ status: false, message: error.message });
     }

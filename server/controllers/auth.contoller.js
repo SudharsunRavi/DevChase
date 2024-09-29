@@ -41,7 +41,7 @@ const login = async (req, res) => {
         if(!isPasswordCorrect) throw new Error("Invalid credentials");
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: "1d"});
-        res.cookie("token", token);
+        res.cookie("token", token, {expires: new Date(Date.now() + 86400000)}); //expires in 1day
 
         res.status(200).json({ status: true, message: "Logged in successfully!", user });
     } catch (error) {
