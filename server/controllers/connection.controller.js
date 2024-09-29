@@ -25,7 +25,8 @@ const sendConnectionRequest = async (req, res) => {
 
         const sendConnection= new connectionModel({ fromUser, toUser, status });
         const data= await sendConnection.save();
-        res.status(201).json({ status: true, message:"Connection sent successfully!", data });
+        const message= status === 'interested' ? "Connection request sent successfully!" : "User added to not interested list!";
+        res.status(201).json({ status: true, message:message, data });
     } catch (error) {
         res.status(500).json({ status: false, message: error.message});
     }

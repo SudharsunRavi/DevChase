@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../redux/userSlice";
 
 const Login = () => {
@@ -88,7 +88,7 @@ const Login = () => {
                             <button className="btn btn-primary">Login</button>
                         </div>
                     </form>
-
+                    <p className="mt-3">New user? <Link to='/signup' className="underline">Signup</Link></p>
                 </div>
             </div>
         </div>

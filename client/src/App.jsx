@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { removeUser } from "./redux/userSlice";
 import toast from "react-hot-toast";
 import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -60,6 +61,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
       },
       {
         path: "/profile",

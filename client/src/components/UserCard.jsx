@@ -20,8 +20,10 @@ const UserCard=({data})=>{
             <div className="card bg-base-300 w-96 shadow-xl">
                 <figure>
                     <img
-                    src={formData?.profileurl}
-                    alt="Profile photo" />
+                        src={formData?.profileurl}
+                        alt="Profile photo"
+                        className="rounded-lg w-full h-36 object-scale-down"
+                    />
                 </figure>
 
                 <div className="card-body">

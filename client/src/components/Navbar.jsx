@@ -4,11 +4,13 @@ import { removeUser } from "../redux/userSlice";
 import MyConnections from "./MyConnections";
 import { useState } from "react";
 import PendingRequests from "./PendingRequests";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
     const userprofile=useSelector((state)=>state.user.profile);
     const dispatch=useDispatch();
+    const navigate=useNavigate();
 
     const [isConnectionsVisible, setConnectionsVisible] = useState(false);
     const [isPendingConnectionsVisible, setPendingConnectionsVisible] = useState(false);
@@ -21,6 +23,7 @@ const Navbar = () => {
                     "Content-Type": "application/json"
                 }
             });
+            navigate("/login");
             dispatch(removeUser());
         } catch (error) {
             toast.error(error);
@@ -42,9 +45,6 @@ const Navbar = () => {
                 <a className="btn btn-ghost text-xl" href="/">DevChase</a>
             </div>
             <div className="flex-none gap-2 mr-10">
-                <div className="form-control">
-                    <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto h-12" />
-                </div>
                 {userprofile ? (<div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
