@@ -6,7 +6,7 @@ const verifiedUser = async (req, res, next) => {
         const {token} = req.cookies;
         if(!token) throw new Error("Unauthorized");
 
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = await jwt.verify(token, "susansecret");
         const user = await userModel.findById(decoded.id);
         if(!user) throw new Error("Unauthorized");
 
