@@ -8,6 +8,7 @@ import { removeUser } from "./redux/userSlice";
 import toast from "react-hot-toast";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
+import Premium from "./pages/Premium";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -69,6 +70,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/premium",
+        element: <Premium />,
       },
     ],
   },
