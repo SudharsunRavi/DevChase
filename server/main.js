@@ -3,6 +3,7 @@ const cookieParser=require('cookie-parser');
 const bodyParser=require('body-parser');
 const dotenv=require('dotenv').config();
 const cors=require('cors');
+const http=require('http');
 
 const connectToDB = require('./DBconfig');
 
@@ -11,6 +12,7 @@ const profileRoutes=require('./routes/profile.route');
 const connectionRoutes=require('./routes/connection.route');
 const userRoutes=require('./routes/user.route');
 const paymentRoutes = require('./routes/payment.route');
+const configureSocket = require('./Socket');
 
 const app=express();
 
@@ -27,8 +29,11 @@ app.use('/request', connectionRoutes);
 app.use('/user', userRoutes);
 app.use('/payment', paymentRoutes);
 
+const server=http.createServer(app);
+configureSocket(server);
+
 connectToDB().then(() => {
-    app.listen(8080, () => {
+    server.listen(8080, () => {
         console.log('Server is running on port 8080');
     });
 }).catch((err) => {

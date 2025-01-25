@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Premium from "./pages/Premium";
+import Chat from "./pages/Chat";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -74,6 +75,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/premium",
         element: <Premium />,
+      },
+      {
+        path: "/chat/:toUser",
+        element: <Chat />,
       },
     ],
   },

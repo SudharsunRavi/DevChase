@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const MyConnections = ({ visible, setVisible }) => {
     
@@ -50,9 +51,13 @@ const MyConnections = ({ visible, setVisible }) => {
                         <div className="flex flex-col gap-4">
                             {connections.length===0 && <h1 className="text-center">No connections yet!</h1>}
                             {connections.map((connection) => (
-                                <div key={connection._id} className="bg-base-300 h-14 rounded-lg flex items-center gap-1">
-                                    <img src={connection.profileurl} alt="profile" className="w-8 h-8 rounded-full mx-2"/>
-                                    <h2 className="">{connection.username}</h2>
+                                <div key={connection._id} className="bg-base-300 h-14 rounded-lg flex items-center justify-between px-2 gap-1">
+                                    <div className="flex items-center">
+                                        <img src={connection.profileurl} alt="profile" className="w-11 h-11 rounded-full mx-2"/>
+                                        <h2 className="">{connection.username}</h2>
+                                    </div>
+
+                                    <Link to={`/chat/${connection._id}`} className="btn btn-sm btn-primary" onClick={handleModalClose}>Chat</Link>
                                 </div>
                             ))}
                         </div>
