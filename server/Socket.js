@@ -1,5 +1,7 @@
 const socket = require('socket.io');
 const crypto = require('crypto');
+const Chat = require('./models/chat.model');
+const connectionModel = require('./models/connection.model');
 
 const configureSocket = (server) => {
     const io = socket(server, {
@@ -21,9 +23,32 @@ const configureSocket = (server) => {
             socket.join(roomId);
         });
 
-        socket.on('sendMessage', ({fromId, toId, message}) =>  {
-            const roomId = uniqueRoomId(fromId, toId);
-            socket.to(roomId).emit('receiveMessage', {fromId, message});
+        socket.on('sendMessage', async({fromId, toId, message}) =>  {
+            try {
+                const roomId = uniqueRoomId(fromId, toId);
+
+                const existingConnection = await connectionModel.findOne({ $or:[
+                                                                                    { fromUser: fromId, toUser: toId }, 
+                                                                                    { fromUser: toId, toUser: fromId }
+                                                                                ] 
+                                                                        });
+                if(!existingConnection) throw new Error("Connection does not exist");
+
+                let chat = await Chat.findOne({participants: {$all: [fromId, toId]}});
+                //console.log(chat);
+                if(!chat) {
+                    chat = new Chat({
+                        participants: [fromId, toId],
+                        messages: []
+                    });
+                }
+                chat.messages.push({from: fromId, text: message});
+                await chat.save();
+
+                io.to(roomId).emit('receiveMessage', {fromId, message});
+            } catch (error) {
+                console.log(error);
+            }
         });
 
         socket.on('disconnect', () => {});

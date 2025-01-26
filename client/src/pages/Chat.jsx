@@ -21,6 +21,7 @@ const Chat = () => {
         });
 
         setMessages([]);
+        fetchChat();
 
         return () => {
             socket.disconnect();
@@ -33,6 +34,25 @@ const Chat = () => {
         const socket = socketConnection();
         socket.emit('sendMessage', {fromId: fromUser, toId: toUser, message: newMessage});
         setNewMessage('');
+    }
+
+    const fetchChat =async()=>{
+        try {
+            const chat=await fetch(`${import.meta.env.VITE_BASE_URL}/chat/${toUser}`, {credentials: "include"})
+            const data=await chat.json()
+            console.log(data.chat.messages);
+
+            const messages = data.chat.messages.map(msg => {
+                return {
+                    fromId: msg?.from?._id,
+                    username: msg?.from?.username,
+                    message: msg?.text
+                }
+            });
+            setMessages(messages);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

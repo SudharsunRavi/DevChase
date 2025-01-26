@@ -12,8 +12,9 @@ const profileRoutes=require('./routes/profile.route');
 const connectionRoutes=require('./routes/connection.route');
 const userRoutes=require('./routes/user.route');
 const paymentRoutes = require('./routes/payment.route');
-const configureSocket = require('./Socket');
+const chatRoutes = require('./routes/chat.route');
 
+const configureSocket = require('./Socket');
 const app=express();
 
 app.use(cors({
@@ -28,6 +29,7 @@ app.use('/profile', profileRoutes);
 app.use('/request', connectionRoutes);
 app.use('/user', userRoutes);
 app.use('/payment', paymentRoutes);
+app.use('/chat', chatRoutes);
 
 const server=http.createServer(app);
 configureSocket(server);
